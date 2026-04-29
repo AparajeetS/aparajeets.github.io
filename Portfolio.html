@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aparajeet Shadangi</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:            #0A090D;
+    --fg:            #EDE9E3;
+    --fg-muted:      #7A7672;
+    --fg-faint:      #3D3B38;
+    --accent:        #A855F7;
+    --accent-mid:    #7C3AED;
+    --accent-light:  rgba(168, 85, 247, 0.10);
+    --border:        rgba(237, 233, 227, 0.07);
+    --border-accent: rgba(168, 85, 247, 0.22);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans:  'DM Sans', system-ui, sans-serif;
+    --mono:  'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD CANVAS ── */
+  #starfield {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.032;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+
+  nav, main, footer, section, .hero { position: relative; z-index: 2; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(10, 9, 13, 0.75);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+  }
+
+  .star-logo {
+    width: 20px; height: 20px;
+    flex-shrink: 0;
+    animation: starPulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(168,85,247,0.6));
+  }
+
+  @keyframes starPulse {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50%       { opacity: 1; transform: scale(1.12); filter: drop-shadow(0 0 10px rgba(168,85,247,0.9)); }
+  }
+
+  .nav-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    color: var(--fg);
+    white-space: nowrap;
+  }
+
+  .nav-links { display: flex; gap: 1.4rem; list-style: none; flex-wrap: nowrap; }
+
+  .nav-links a {
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 100%;
+    height: 0.5px;
+    background: var(--accent);
+    transition: right 0.25s ease;
+  }
+
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a:hover::after { right: 0; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 8vh;
+    border-bottom: 0.5px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    bottom: -15%; left: -5%;
+    width: 55vw; height: 55vw;
+    background: radial-gradient(ellipse, rgba(124,58,237,0.14) 0%, transparent 68%);
+    pointer-events: none;
+    animation: glowBreath 7s ease-in-out infinite alternate;
+  }
+
+  @keyframes glowBreath {
+    from { opacity: 0.7; transform: scale(1); }
+    to   { opacity: 1;   transform: scale(1.08); }
+  }
+
+  .hero-star-deco {
+    position: absolute;
+    top: 8%; right: 5%;
+    width: 480px; height: 480px;
+    opacity: 0.055;
+    animation: rotateSlow 90s linear infinite;
+    filter: blur(0.5px);
+    will-change: transform;
+  }
+
+  @keyframes rotateSlow { to { transform: rotate(360deg); } }
+
+  .hero-star-deco2 {
+    position: absolute;
+    bottom: 15%; left: 42%;
+    width: 120px; height: 120px;
+    opacity: 0.04;
+    animation: rotateSlow 50s linear infinite reverse;
+  }
+
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--fg-faint);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.35s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    background: linear-gradient(100deg, #A855F7 0%, #E4BCFF 38%, #A855F7 55%, #7C3AED 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+    filter: drop-shadow(0 0 28px rgba(168,85,247,0.5));
+  }
+
+  @keyframes shimmer {
+    from { background-position: 0% center; }
+    to   { background-position: 200% center; }
+  }
+
+  .hero-sub {
+    margin-top: 2rem;
+    max-width: 560px;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.75;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.55s forwards;
+  }
+
+  .hero-meta {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.7s forwards;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 0.5px solid var(--border-accent);
+    padding: 0.35rem 0.85rem;
+    border-radius: 2rem;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .badge:hover {
+    background: rgba(168,85,247,0.16);
+    box-shadow: 0 0 16px rgba(168,85,247,0.2);
+  }
+
+  .badge-star { width: 10px; height: 10px; flex-shrink: 0; }
+
+  .hero-scroll {
+    font-size: 0.72rem;
+    color: var(--fg-faint);
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-scroll::before {
+    content: '';
+    display: inline-block;
+    width: 1px; height: 24px;
+    background: linear-gradient(to bottom, transparent, var(--fg-faint));
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 1; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.32s; }
+  .reveal-delay-4 { transition-delay: 0.44s; }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 3rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-bottom: 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 0.5px;
+    background: linear-gradient(to right, var(--accent), var(--fg-faint));
+  }
+
+  /* ── ABOUT ── */
+  #about { padding-top: 3rem; padding-bottom: 3rem; }
+
+  #about .section-label { margin-bottom: 2rem; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-pull {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 300;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--fg);
+  }
+
+  .about-pull em { font-style: italic; color: var(--accent); }
+
+  .about-body {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.85;
+  }
+
+  .about-body p + p { margin-top: 1.25rem; }
+
+  /* ── RESEARCH / NOTES shared list ── */
+  .research-list { display: flex; flex-direction: column; }
+
+  .research-item {
+    display: grid;
+    grid-template-columns: 4rem 1fr auto;
+    align-items: start;
+    gap: 2rem;
+    padding: 2.25rem 0;
+    border-top: 0.5px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.3s, padding-left 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .research-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .research-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.35s ease;
+  }
+
+  .research-item:hover::before { transform: scaleY(1); }
+  .research-item:hover { background: rgba(168,85,247,0.035); padding-left: 0.75rem; }
+  .research-item:hover .research-num { color: var(--accent); }
+
+  .research-num {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--fg-faint);
+    padding-top: 0.3rem;
+    transition: color 0.2s;
+  }
+
+  .research-title {
+    font-family: var(--serif);
+    font-size: 1.45rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .research-desc {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  .research-tags {
+    display: flex;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    border: 0.5px solid var(--border);
+    padding: 0.22rem 0.55rem;
+    border-radius: 2rem;
+    transition: border-color 0.2s;
+  }
+
+  .research-item:hover .tag { border-color: rgba(168,85,247,0.2); }
+
+  .research-arrow {
+    font-size: 1rem;
+    color: var(--fg-faint);
+    transition: color 0.2s, transform 0.2s;
+    padding-top: 0.25rem;
+  }
+
+  .research-item:hover .research-arrow {
+    color: var(--accent);
+    transform: translate(3px, -3px);
+    filter: drop-shadow(0 0 6px rgba(168,85,247,0.6));
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 680px;
+  }
+
+  .tl-item {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 2rem;
+    padding: 1.6rem 0;
+    border-top: 0.5px solid var(--border);
+    position: relative;
+  }
+
+  .tl-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .tl-year {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--fg-faint);
+    padding-top: 0.2rem;
+  }
+
+  .tl-content {}
+
+  .tl-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--fg);
+    margin-bottom: 0.3rem;
+  }
+
+  .tl-desc {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.65;
+  }
+
+  /* ── METHODS grid ── */
+  .methods-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .methods-pull {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--fg);
+  }
+
+  .methods-pull em { font-style: italic; color: var(--accent); }
+
+  .methods-body {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.85;
+  }
+
+  .methods-body p + p { margin-top: 1.25rem; }
+
+  .methods-stack {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stack-item {
+    display: grid;
+    grid-template-columns: minmax(10.5rem, 12rem) 1fr;
+    align-items: baseline;
+    column-gap: 1.25rem;
+    padding: 0.85rem 0;
+    border-top: 0.5px solid var(--border);
+  }
+
+  .stack-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .stack-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    min-width: 0;
+  }
+
+  .stack-value {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--fg-muted);
+    min-width: 0;
+  }
+
+  /* ── MATHEMATICS ── */
+  .math-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .math-pull {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--fg);
+  }
+
+  .math-pull em { font-style: italic; color: var(--accent); }
+
+  .math-body {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.85;
+  }
+
+  .math-body p + p { margin-top: 1.25rem; }
+
+  .math-items {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .math-item {
+    padding: 0.9rem 0;
+    border-top: 0.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .math-item:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .math-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--fg-faint);
+    flex-shrink: 0;
+  }
+
+  .math-text {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--fg-muted);
+  }
+
+  .math-status {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-left: auto;
+  }
+
+  /* ── PHILOSOPHY / APPROACH ── */
+  .approach-body {
+    max-width: 720px;
+  }
+
+  .approach-pull {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    color: var(--fg);
+    margin-bottom: 3rem;
+  }
+
+  .approach-pull em { font-style: italic; color: var(--accent); }
+
+  .approach-text {
+    font-size: 0.97rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.9;
+  }
+
+  .approach-text p + p { margin-top: 1.4rem; }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-pull {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 2.5vw, 2rem);
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--fg);
+  }
+
+  .contact-pull em { font-style: italic; color: var(--accent); }
+
+  .contact-links { display: flex; flex-direction: column; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0;
+    border-top: 0.5px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.25s, border-color 0.25s;
+    cursor: pointer;
+  }
+
+  .contact-link:last-child { border-bottom: 0.5px solid var(--border); }
+
+  .contact-link:hover {
+    padding-left: 0.6rem;
+    border-color: rgba(168,85,247,0.2);
+  }
+
+  .contact-link-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  .contact-link-value {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--fg);
+  }
+
+  .contact-link-arrow {
+    color: var(--fg-faint);
+    font-size: 0.85rem;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .contact-link:hover .contact-link-arrow {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-left { display: flex; align-items: center; gap: 0.6rem; }
+
+  .footer-name {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    color: var(--fg-faint);
+  }
+
+  .footer-note {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── WORK IN PROGRESS ── */
+  #work { position: relative; overflow: hidden; }
+
+  .deco-work {
+    position: absolute;
+    top: 3rem; right: 3rem;
+    width: 100px; height: 100px;
+    opacity: 0.06;
+    animation: rotateSlow 40s linear infinite;
+  }
+
+  .wip-block {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .wip-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .wip-block-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .wip-block-num {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  .wip-block-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--fg);
+    letter-spacing: -0.005em;
+  }
+
+  .wip-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .wip-left {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: var(--fg-muted);
+    line-height: 1.85;
+  }
+
+  .wip-right { display: flex; flex-direction: column; }
+
+  /* ── TIMELINE ── */
+  #timeline { position: relative; overflow: hidden; }
+
+  .deco-timeline {
+    position: absolute;
+    top: 50%; right: 2rem;
+    transform: translateY(-50%);
+    width: 160px; height: 160px;
+    opacity: 0.04;
+    animation: rotateSlow 60s linear infinite reverse;
+  }
+
+  .tl-item { position: relative; }
+
+  .tl-item--active .tl-year { color: var(--accent); }
+  .tl-item--active .tl-title { color: var(--fg); }
+  .tl-item--active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1.5px;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  }
+
+  /* ── APPROACH ── */
+  #approach { position: relative; overflow: hidden; }
+
+  .deco-approach {
+    position: absolute;
+    bottom: 2rem; right: 3rem;
+    width: 100px; height: 100px;
+    opacity: 0.05;
+    animation: glowBreath 8s ease-in-out infinite alternate;
+  }
+
+  /* ── CONTACT ── */
+  #contact { position: relative; overflow: hidden; }
+
+  .deco-contact {
+    position: absolute;
+    top: 50%; right: 3rem;
+    transform: translateY(-50%);
+    width: 90px; height: 90px;
+    opacity: 0.06;
+    animation: signalPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes signalPulse {
+    0%, 100% { opacity: 0.04; transform: translateY(-50%) scale(1); }
+    50%       { opacity: 0.09; transform: translateY(-50%) scale(1.06); }
+  }
+
+  /* ── ABOUT DECO ── */
+  #about { position: relative; overflow: hidden; }
+
+  .deco-about {
+    position: absolute;
+    top: 2rem; right: 3rem;
+    width: 110px; height: 110px;
+    opacity: 0.05;
+    animation: rotateSlow 70s linear infinite;
+  }
+
+  /* ── RESEARCH DECO ── */
+  #research { position: relative; overflow: hidden; }
+
+  .deco-research {
+    position: absolute;
+    top: 2.5rem; right: 3rem;
+    width: 110px; height: 90px;
+    opacity: 0.06;
+  }
+
+  @media (max-width: 720px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .wip-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .stack-item { grid-template-columns: 1fr; row-gap: 0.35rem; align-items: start; }
+    .research-item { grid-template-columns: 3rem 1fr; }
+    .research-arrow { display: none; }
+    .deco-work, .deco-timeline, .deco-approach, .deco-contact, .deco-about, .deco-research { display: none; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<svg width="0" height="0" style="position:absolute;z-index:0;">
+  <defs>
+    <path id="star8"
+      d="M16,1 Q16.77,14.15 26.61,5.39 Q17.85,15.23 31,16 Q17.85,16.77 26.61,26.61 Q16.77,17.85 16,31 Q15.23,17.85 5.39,26.61 Q14.15,16.77 1,16 Q14.15,15.23 5.39,5.39 Q15.23,14.15 16,1 Z"
+    />
+  </defs>
+</svg>
+
+<!-- NAV -->
+<nav>
+  <a href="#top" class="nav-left">
+    <svg class="star-logo" viewBox="0 0 32 32" fill="none">
+      <use href="#star8" fill="#A855F7"/>
+    </svg>
+    <span class="nav-name">Aparajeet Shadangi</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <svg class="hero-star-deco" viewBox="0 0 32 32" fill="none">
+    <use href="#star8" fill="#A855F7"/>
+  </svg>
+  <svg class="hero-star-deco2" viewBox="0 0 32 32" fill="none">
+    <use href="#star8" fill="#A855F7"/>
+  </svg>
+
+  <div class="hero-label">Independent Researcher · Bhubaneswar, India</div>
+  <h1 class="hero-name">Aparajeet<br><em>Shadangi</em></h1>
+  <p class="hero-sub">
+    Developing and testing alternative explanations for cosmic expansion through Configurational Dispersal Cosmology (CDC), with ongoing numerical implementation using CAMB and MCMC methods.
+  </p>
+  <div class="hero-meta">
+    <span class="badge">
+      <svg class="badge-star" viewBox="0 0 32 32" fill="none">
+        <use href="#star8" fill="#A855F7"/>
+      </svg>
+      CDC · Cosmology
+    </span>
+    <span class="badge">CAMB · MCMC</span>
+    <span class="hero-scroll">Scroll to explore</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <!-- decorative: orbital rings -->
+  <svg class="deco-about" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="60" cy="60" rx="50" ry="18" stroke="#A855F7" stroke-width="0.8"/>
+    <ellipse cx="60" cy="60" rx="50" ry="18" stroke="#A855F7" stroke-width="0.8" transform="rotate(60 60 60)"/>
+    <ellipse cx="60" cy="60" rx="50" ry="18" stroke="#A855F7" stroke-width="0.8" transform="rotate(120 60 60)"/>
+    <circle cx="60" cy="60" r="5" fill="#A855F7"/>
+  </svg>
+  <p class="section-label reveal">01 &nbsp; About</p>
+  <div class="about-grid">
+    <div class="about-pull reveal reveal-delay-1">
+      An 18-year-old asking questions most people wait decades to ask, <em>about the nature of space, expansion, and cosmic order.</em>
+    </div>
+    <div class="about-body reveal reveal-delay-2">
+      <p>
+        I am an independent researcher from India, currently developing and testing Configurational Dispersal Cosmology (CDC) — a framework that proposes cosmic acceleration may arise from an intrinsic dispersal tendency in the universe's configuration space, rather than from an external dark energy component.
+      </p>
+      <p>
+        After school, I took a gap year to work independently and used that time for self-directed research in cosmology, mathematics, and numerical methods. Coming from a low-income background, I have treated the work carefully: building the framework step by step, documenting what is established, and separating formal development from claims that require observation.
+      </p>
+      <p>
+        In January 2026, Emergent Ventures funding allowed me to continue the research full-time and gain access to computing resources. The current phase focuses on CDC II's mathematical framework, numerical evolution of the derived background system, and preparation for CAMB / CLASS integration and later likelihood-based testing.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <!-- decorative: scatter plot ascending curve -->
+  <svg class="deco-research" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M10 75 Q40 60 60 40 Q80 20 110 10" stroke="#A855F7" stroke-width="0.8" stroke-dasharray="3 3"/>
+    <circle cx="12" cy="74" r="2.5" fill="#A855F7"/>
+    <circle cx="28" cy="65" r="2" fill="#A855F7"/>
+    <circle cx="45" cy="52" r="2.5" fill="#A855F7"/>
+    <circle cx="62" cy="38" r="2" fill="#A855F7"/>
+    <circle cx="78" cy="28" r="2.5" fill="#A855F7"/>
+    <circle cx="95" cy="18" r="2" fill="#A855F7"/>
+    <circle cx="110" cy="10" r="2.5" fill="#A855F7"/>
+  </svg>
+  <p class="section-label reveal">02 &nbsp; Research &amp; Writing</p>
+  <div class="research-list">
+
+    <a class="research-item reveal reveal-delay-1" href="https://doi.org/10.5281/zenodo.18017864" target="_blank">
+      <span class="research-num">001</span>
+      <div>
+        <div class="research-title">CDC: Original Preprint (Dec 2025)</div>
+        <div class="research-desc">
+          Paper I of a three-paper CDC research program. The first formulation of Configurational Dispersal Cosmology, establishing the original hypothesis and introducing a scalar-tensor placeholder framework.
+        </div>
+        <div class="research-tags">
+          <span class="tag">Finished</span>
+          <span class="tag">Preprint</span>
+          <span class="tag">Zenodo</span>
+        </div>
+      </div>
+      <span class="research-arrow">↗</span>
+    </a>
+
+    <div class="research-item reveal reveal-delay-2" style="cursor:default;">
+      <span class="research-num">002</span>
+      <div>
+        <div class="research-title">CDC II: Mathematical Framework</div>
+        <div class="research-desc">
+          Paper II of the CDC research program. The mathematical upgrade of the framework introduces a binding-dependent kinetic suppression model, derives the full background evolution system, establishes a perturbation framework, and demonstrates preliminary geometric consistency with observational data. It represents the current highest level of formal development and sets the foundation for full Boltzmann implementation and computational testing.
+        </div>
+        <div class="research-tags">
+          <span class="tag">Finished</span>
+          <span class="tag">Mathematical Development</span>
+        </div>
+      </div>
+      <span class="research-arrow" style="opacity:0.2;">↗</span>
+    </div>
+
+    <div class="research-item reveal reveal-delay-3" style="cursor:default;">
+      <span class="research-num">003</span>
+      <div>
+        <div class="research-title">Numerical Implementation &amp; Observational Testing</div>
+        <div class="research-desc">
+          Paper III direction of the CDC research program. Ongoing work focused on implementing CDC within a full cosmological pipeline, including CAMB-level integration, numerical evolution of the derived background system, and preparation for MCMC-based parameter estimation against datasets such as DESI DR2 BAO, Planck CMB, Euclid, and Pantheon+.
+        </div>
+        <div class="research-tags">
+          <span class="tag">In Progress</span>
+        </div>
+      </div>
+      <span class="research-arrow" style="opacity:0.2;">↗</span>
+    </div>
+
+    <a class="research-item reveal reveal-delay-3" href="https://substack.com/@aparajeetshadangi" target="_blank">
+      <span class="research-num">004</span>
+      <div>
+        <div class="research-title">Writings (Substack)</div>
+        <div class="research-desc">
+          Long-form essays exploring existence, science, and philosophical questions, reflecting a broader intellectual inquiry beyond formal research.
+        </div>
+        <div class="research-tags">
+          <span class="tag">Essays</span>
+          <span class="tag">Substack</span>
+        </div>
+      </div>
+      <span class="research-arrow">↗</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- WORK IN PROGRESS -->
+<section id="work">
+  <!-- decorative: interconnected nodes -->
+  <svg class="deco-work" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="60" cy="20" r="4" fill="#A855F7"/>
+    <circle cx="20" cy="80" r="4" fill="#A855F7"/>
+    <circle cx="100" cy="80" r="4" fill="#A855F7"/>
+    <circle cx="60" cy="60" r="3" fill="#A855F7"/>
+    <line x1="60" y1="20" x2="60" y2="60" stroke="#A855F7" stroke-width="0.8"/>
+    <line x1="20" y1="80" x2="60" y2="60" stroke="#A855F7" stroke-width="0.8"/>
+    <line x1="100" y1="80" x2="60" y2="60" stroke="#A855F7" stroke-width="0.8"/>
+    <line x1="60" y1="20" x2="20" y2="80" stroke="#A855F7" stroke-width="0.4" stroke-dasharray="3 4"/>
+    <line x1="60" y1="20" x2="100" y2="80" stroke="#A855F7" stroke-width="0.4" stroke-dasharray="3 4"/>
+    <line x1="20" y1="80" x2="100" y2="80" stroke="#A855F7" stroke-width="0.4" stroke-dasharray="3 4"/>
+  </svg>
+
+  <p class="section-label reveal">03 &nbsp; Work in Progress</p>
+
+  <!-- Pipeline -->
+  <div class="wip-block reveal reveal-delay-1">
+    <div class="wip-block-head">
+      <span class="wip-block-num">I</span>
+      <span class="wip-block-title">Numerical Pipeline</span>
+    </div>
+    <div class="wip-grid">
+      <div class="wip-left">
+        <p>The numerical work is being built from the mathematical system derived in CDC II. The current focus is background evolution, stable integration of the dimensionless e-fold system, and preparation for later Boltzmann-code implementation and likelihood analysis.</p>
+      </div>
+      <div class="wip-right">
+        <div class="stack-item"><span class="stack-label">Forward Model</span><span class="stack-value">Background evolution using the e-fold system derived in CDC II</span></div>
+        <div class="stack-item"><span class="stack-label">Numerical Integration</span><span class="stack-value">Runge-Kutta methods applied to the dimensionless system</span></div>
+        <div class="stack-item"><span class="stack-label">Framework Direction</span><span class="stack-value">Preparing integration into CAMB / CLASS</span></div>
+        <div class="stack-item"><span class="stack-label">Sampling</span><span class="stack-value">MCMC planned for full likelihood analysis</span></div>
+        <div class="stack-item"><span class="stack-label">Datasets</span><span class="stack-value">DESI DR2 BAO · Planck · Pantheon+ · Euclid</span></div>
+        <div class="stack-item"><span class="stack-label">Status</span><span class="stack-value">Active · April 2026</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mathematics -->
+  <div class="wip-block reveal reveal-delay-2">
+    <div class="wip-block-head">
+      <span class="wip-block-num">II</span>
+      <span class="wip-block-title">Mathematical Formalisation</span>
+    </div>
+    <div class="wip-grid">
+      <div class="wip-left">
+        <p>CDC II upgrades the original hypothesis into a more explicit mathematical framework, including an effective spacetime theory, background evolution system, dimensionless e-fold formulation, and perturbation-level structure. Full Boltzmann implementation remains the next step.</p>
+      </div>
+      <div class="wip-right">
+        <div class="math-item"><div class="math-dot"></div><span class="math-text">Core assumptions and physical motivation</span><span class="math-status">Done</span></div>
+        <div class="math-item"><div class="math-dot"></div><span class="math-text">Effective spacetime theory and action</span><span class="math-status">Done</span></div>
+        <div class="math-item"><div class="math-dot"></div><span class="math-text">Background evolution equations</span><span class="math-status">Done</span></div>
+        <div class="math-item"><div class="math-dot"></div><span class="math-text">Dimensionless e-fold system</span><span class="math-status">Done</span></div>
+        <div class="math-item"><div class="math-dot"></div><span class="math-text">Perturbation framework</span><span class="math-status">Done</span></div>
+        <div class="math-item"><div class="math-dot"></div><span class="math-text">Full Boltzmann implementation</span><span class="math-status">Pending</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open questions -->
+  <div class="wip-block reveal reveal-delay-3">
+    <div class="wip-block-head">
+      <span class="wip-block-num">III</span>
+      <span class="wip-block-title">Open Questions</span>
+    </div>
+    <div class="research-list" style="margin-top:0;">
+      <div class="research-item" style="cursor:default;">
+        <span class="research-num">N01</span>
+        <div>
+          <div class="research-title">Dispersal vs Gravitational Binding</div>
+          <div class="research-desc">Whether the competition between dispersal and binding has a precise crossover scale, or whether binding simply freezes dispersal locally. The answer matters for structure formation predictions. Not resolved.</div>
+          <div class="research-tags"><span class="tag">Structure Formation</span><span class="tag">Open</span></div>
+        </div>
+      </div>
+      <div class="research-item" style="cursor:default;">
+        <span class="research-num">N02</span>
+        <div>
+          <div class="research-title">Equilibrium in Relativistic Spacetime</div>
+          <div class="research-desc">The precise definition of configurational equilibrium in an expanding FRW spacetime is not yet clean. Whether the concept maps directly onto the FRW framework or requires modification is still open.</div>
+          <div class="research-tags"><span class="tag">Thermodynamics</span><span class="tag">FRW</span><span class="tag">Ongoing</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <!-- decorative: expanding concentric rings -->
+  <svg class="deco-timeline" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="60" cy="60" r="8"  stroke="#A855F7" stroke-width="0.8"/>
+    <circle cx="60" cy="60" r="22" stroke="#A855F7" stroke-width="0.6" stroke-dasharray="2 4"/>
+    <circle cx="60" cy="60" r="38" stroke="#A855F7" stroke-width="0.5" stroke-dasharray="2 6"/>
+    <circle cx="60" cy="60" r="54" stroke="#A855F7" stroke-width="0.4" stroke-dasharray="1 7"/>
+    <circle cx="60" cy="60" r="3"  fill="#A855F7"/>
+  </svg>
+
+  <p class="section-label reveal">04 &nbsp; Timeline</p>
+  <div class="timeline reveal reveal-delay-1">
+
+    <div class="tl-item">
+      <span class="tl-year">July 2025</span>
+      <div class="tl-content">
+        <div class="tl-title">Idea Originates</div>
+        <div class="tl-desc">The CDC concept begins as a hypothesis about whether cosmic expansion could be connected to an intrinsic dispersal tendency in configuration space.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">Dec 2025</span>
+      <div class="tl-content">
+        <div class="tl-title">First Preprint</div>
+        <div class="tl-desc">Paper I is released on Zenodo as the original CDC preprint, presenting the hypothesis and a scalar-tensor placeholder framework.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">Jan 2026</span>
+      <div class="tl-content">
+        <div class="tl-title">Emergent Ventures Funding</div>
+        <div class="tl-desc">Emergent Ventures funding enables full-time research and access to computing resources for mathematical development and numerical testing.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">April 2026</span>
+      <div class="tl-content">
+        <div class="tl-title">Mathematical Framework Development</div>
+        <div class="tl-desc">CDC II develops the mathematical framework, including the binding-dependent kinetic suppression model, background evolution equations, dimensionless e-fold system, and perturbation framework.</div>
+      </div>
+    </div>
+
+    <div class="tl-item tl-item--active">
+      <span class="tl-year">April 2026 – Present</span>
+      <div class="tl-content">
+        <div class="tl-title">Numerical Implementation and Observational Testing</div>
+        <div class="tl-desc">Active work on numerical evolution of the CDC II background system, preparation for CAMB / CLASS integration, and later MCMC-based comparison with DESI DR2 BAO, Planck, Pantheon+, and Euclid datasets.</div>
+        <div class="research-tags" style="margin-top:0.75rem;">
+          <span class="tag">CAMB</span><span class="tag">MCMC</span><span class="tag">DESI DR2</span><span class="tag">Pantheon+</span><span class="tag">Planck</span><span class="tag">Euclid</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- APPROACH -->
+<section id="approach">
+  <!-- decorative: radiating lines like a horizon -->
+  <svg class="deco-approach" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <line x1="60" y1="90" x2="60"  y2="30"  stroke="#A855F7" stroke-width="0.8"/>
+    <line x1="60" y1="90" x2="20"  y2="38"  stroke="#A855F7" stroke-width="0.6"/>
+    <line x1="60" y1="90" x2="100" y2="38"  stroke="#A855F7" stroke-width="0.6"/>
+    <line x1="60" y1="90" x2="5"   y2="55"  stroke="#A855F7" stroke-width="0.4"/>
+    <line x1="60" y1="90" x2="115" y2="55"  stroke="#A855F7" stroke-width="0.4"/>
+    <line x1="60" y1="90" x2="5"   y2="75"  stroke="#A855F7" stroke-width="0.3" stroke-dasharray="2 3"/>
+    <line x1="60" y1="90" x2="115" y2="75"  stroke="#A855F7" stroke-width="0.3" stroke-dasharray="2 3"/>
+    <circle cx="60" cy="90" r="3" fill="#A855F7"/>
+  </svg>
+
+  <p class="section-label reveal">05 &nbsp; Approach</p>
+  <div class="approach-body reveal reveal-delay-1">
+    <div class="approach-pull">
+      I am drawn to ideas that are <em>structurally different</em> from the consensus, not for the sake of it, but because the most important shifts in understanding tend to look that way at the start.
+    </div>
+    <div class="approach-text">
+      <p>Paradigm-shifting ideas often appear abnormal before they appear correct. This is not a justification for bad science; it is a reason to hold unconventional ideas to a higher standard of rigour, not a lower one. If the idea is genuinely different, the burden of demonstration is larger, not smaller.</p>
+      <p>I try to be honest about what is established and what is not. The difference between "this framework has an interesting structure" and "this framework is correct" is significant, and I take that difference seriously. Preliminary results are not results. Intuitions are not evidence.</p>
+      <p>The goal of working on CDC is not to be right about dark energy. The goal is to build something that is genuinely testable: one that makes predictions which could, in principle, falsify it. A framework that cannot be falsified is not doing science, regardless of how elegant it is.</p>
+      <p>I am 18 and work without institutional affiliation or formal supervision. What I have is time, access to the same literature as everyone else, and a willingness to do the slow work: learning the tools, checking the mathematics, and testing against real data.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <!-- decorative: signal waves -->
+  <svg class="deco-contact" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M30 60 Q45 35 60 60 Q75 85 90 60" stroke="#A855F7" stroke-width="1" fill="none"/>
+    <path d="M15 60 Q37 20 60 60 Q83 100 105 60" stroke="#A855F7" stroke-width="0.6" fill="none" stroke-dasharray="3 4"/>
+    <path d="M44 60 Q52 44 60 60 Q68 76 76 60" stroke="#A855F7" stroke-width="1.2" fill="none"/>
+    <circle cx="60" cy="60" r="3" fill="#A855F7"/>
+  </svg>
+
+  <p class="section-label reveal">06 &nbsp; Contact</p>
+  <div class="contact-grid">
+    <div class="contact-pull reveal reveal-delay-1">
+      <em>Open to correspondence.</em> Questions, collaboration, or just a conversation about the universe.
+    </div>
+    <div class="contact-links reveal reveal-delay-2">
+      <a class="contact-link" href="mailto:aparajeet.shadangi@proton.me">
+        <span class="contact-link-label">Email</span>
+        <span class="contact-link-value">aparajeet.shadangi@proton.me</span>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://github.com/AparajeetS" target="_blank">
+        <span class="contact-link-label">GitHub</span>
+        <span class="contact-link-value">Code &amp; Experiments</span>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://substack.com/@aparajeetshadangi" target="_blank">
+        <span class="contact-link-label">Substack</span>
+        <span class="contact-link-value">Writings</span>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="#">
+        <span class="contact-link-label">Location</span>
+        <span class="contact-link-value">Bhubaneswar, India</span>
+        <span class="contact-link-arrow"></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER --><!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <svg width="14" height="14" viewBox="0 0 32 32" fill="none" style="opacity:0.28;">
+      <use href="#star8" fill="#A855F7"/>
+    </svg>
+    <span class="footer-name">Aparajeet Shadangi</span>
+  </div>
+  <span class="footer-note">© 2026 · Independent Researcher</span>
+</footer>
+
+<script>
+/* ── STARFIELD ── */
+(function() {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initStars(n) {
+    stars = [];
+    for (let i = 0; i < n; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 0.85 + 0.15,
+        speed: Math.random() * 0.012 + 0.003,
+        opacity: Math.random() * 0.55 + 0.15,
+        twinkleOffset: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    frame += 0.008;
+    for (const s of stars) {
+      const twinkle = 0.6 + 0.4 * Math.sin(frame * 1.4 + s.twinkleOffset);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(237,233,227,${s.opacity * twinkle})`;
+      ctx.fill();
+      s.y -= s.speed;
+      if (s.y < -2) { s.y = H + 2; s.x = Math.random() * W; }
+    }
+    requestAnimationFrame(draw);
+  }
+
+  resize();
+  initStars(260);
+  draw();
+  window.addEventListener('resize', () => { resize(); initStars(260); });
+})();
+
+/* ── SCROLL REVEAL ── */
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(el => io.observe(el));
+})();
+
+/* ── HERO STAR PARALLAX ON MOUSE ── */
+(function() {
+  const star = document.querySelector('.hero-star-deco');
+  document.addEventListener('mousemove', (e) => {
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight / 2;
+    const dx = (e.clientX - cx) / cx;
+    const dy = (e.clientY - cy) / cy;
+    star.style.transform = `rotate(${dx * 6}deg) translate(${dx * -14}px, ${dy * -10}px)`;
+  });
+})();
+</script>
+
+</body>
+</html>
