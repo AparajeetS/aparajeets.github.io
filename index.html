@@ -913,20 +913,21 @@
     <use href="#star8" fill="#A855F7"/>
   </svg>
 
-  <div class="hero-label">Independent Researcher · Bhubaneswar, India</div>
+  <div class="hero-label">Student Researcher · Theoretical Physics · Machine Learning</div>
   <h1 class="hero-name">Aparajeet<br><em>Shadangi</em></h1>
   <p class="hero-sub">
-    Developing Configurational Dispersal Cosmology (CDC), a testable alternative to dark energy, with ongoing numerical implementation using CAMB and MCMC methods.<br><br>
-    CDC proposes that cosmic acceleration emerges from an intrinsic dispersal tendency of matter-energy configurations, rather than from dark energy.
+    I’m a student researcher working in machine learning and theoretical physics, focused on ideas that can be turned into evidence.<br><br>
+    My current work includes Configurational Dispersal Cosmology (CDC), developing configurational dispersal as a possible mechanism behind cosmic acceleration, and Marginal Baseline Evaluation (MBE), ML research on generalization metrics, meaningful controls, and more reliable ways to evaluate model behavior.
   </p>
   <div class="hero-meta">
     <span class="badge">
       <svg class="badge-star" viewBox="0 0 32 32" fill="none">
         <use href="#star8" fill="#A855F7"/>
       </svg>
-      CDC · Cosmology
+      Physics · CDC
     </span>
-    <span class="badge">CAMB · MCMC</span>
+    <span class="badge">ML Research</span>
+    <span class="badge">Scientific Computing</span>
     <span class="hero-scroll">Scroll to explore</span>
   </div>
 </section>
@@ -943,17 +944,20 @@
   <p class="section-label reveal">01 &nbsp; About</p>
   <div class="about-grid">
     <div class="about-pull reveal reveal-delay-1">
-      An independent researcher building a testable alternative to dark energy — <em>from mathematical formulation to observational comparison.</em>
+      I’m drawn to problems where insight is not enough on its own: <em>the work has to become a model, a prediction, a control, or an experiment that can be checked.</em>
     </div>
     <div class="about-body reveal reveal-delay-2">
       <p>
-        I am an independent researcher developing Configurational Dispersal Cosmology (CDC) — a framework that proposes cosmic acceleration arises from an intrinsic dispersal tendency in the universe's configuration space, rather than from a dark energy component. The framework is constructed to be falsifiable: it makes concrete predictions for the expansion history and structure growth that can be tested against observational data.
+        I work between theoretical physics, machine learning, and scientific computing. The common thread is turning promising ideas into something measurable: equations, code, experiments, and evidence.
       </p>
       <p>
-        After completing secondary school, I took a structured gap year dedicated to building CDC as a rigorous scientific program: establishing theoretical foundations, deriving the full mathematical formulation, and beginning numerical implementation. Each stage has been developed carefully, with clear separation between formal results and open conjectures. CDC II, the mathematical formulation paper, has been submitted to Physics of the Dark Universe and is currently under review.
+        Configurational Dispersal Cosmology (CDC) develops configurational dispersal as a possible mechanism behind cosmic acceleration. I am developing it through formal derivations, computational implementation, and comparison with observational datasets.
       </p>
       <p>
-        In January 2026, Emergent Ventures funding allowed me to continue full-time and access the computing resources required for numerical testing. The current phase focuses on implementing CDC II's derived system numerically, integrating it into CAMB or CLASS, and running MCMC-based parameter estimation against DESI DR2 BAO, Planck CMB, Pantheon+, and Euclid datasets.
+        My machine learning work includes Marginal Baseline Evaluation (MBE), research on generalization metrics and controlled evidence. MBE asks whether a metric still contains useful predictive signal after ordinary baselines, training choices, and design variables are accounted for.
+      </p>
+      <p>
+        Alongside these research directions, I build open-source tools and experimental systems when they make the work more testable, reproducible, or useful to others.
       </p>
     </div>
   </div>
@@ -978,9 +982,9 @@
     <a class="research-item reveal reveal-delay-1" href="https://doi.org/10.5281/zenodo.18017864" target="_blank">
       <span class="research-num">001</span>
       <div>
-        <div class="research-title">CDC: Original Preprint (Dec 2025)</div>
+        <div class="research-title">CDC: Original Preprint</div>
         <div class="research-desc">
-          Paper I of the CDC research program. The founding document — establishing the core hypothesis that cosmic acceleration arises from a dispersal tendency in configuration space, and introducing the initial scalar-tensor placeholder framework for subsequent development.
+          Paper I of the CDC research program. Establishes the core hypothesis that cosmic acceleration may arise from a dispersal tendency in configuration space, and records the initial scalar-tensor placeholder framework that later work replaces with a more formal system.
         </div>
         <div class="research-tags">
           <span class="tag">Finished</span>
@@ -996,33 +1000,52 @@
       <div>
         <div class="research-title">CDC II: The Mathematical Framework</div>
         <div class="research-desc">
-          Paper II of the CDC research program. Develops the complete mathematical formulation of CDC: a binding-dependent kinetic suppression model, background evolution equations in dimensionless e-fold form, a perturbation-level framework, and preliminary geometric consistency with observational data. Establishes the formal foundation required for Boltzmann integration and full observational testing. Submitted to Physics of the Dark Universe; currently under review.
+          Paper II of the CDC research program. Develops the mathematical formulation: binding-dependent kinetic suppression, background evolution in dimensionless e-fold form, perturbation-level structure, and preliminary geometric consistency checks.
         </div>
         <div class="research-tags">
           <span class="tag">Finished</span>
-          <span class="tag">Under Review</span>
-          <span class="tag">Physics of the Dark Universe</span>
+          <span class="tag">Mathematical Framework</span>
+          <span class="tag">Cosmology</span>
         </div>
       </div>
       <span class="research-arrow">↗</span>
     </a>
 
-    <div class="research-item reveal reveal-delay-3" style="cursor:default;">
+    <a class="research-item reveal reveal-delay-3" href="https://github.com/AparajeetS/CDC" target="_blank">
       <span class="research-num">003</span>
       <div>
-        <div class="research-title">Numerical Implementation &amp; Observational Testing</div>
+        <div class="research-title">Computational Implementation of CDC</div>
         <div class="research-desc">
-          Paper III direction of the CDC research program. Active work on implementing CDC within a full cosmological pipeline — CAMB integration, numerical evolution of the background system, and MCMC-based parameter estimation against DESI DR2 BAO, Planck CMB, Pantheon+, and Euclid. The objective is a quantitative, likelihood-based comparison of CDC against ΛCDM across multiple independent datasets.
+          Work-in-progress computational implementation of the CDC framework: background and growth solvers, numerical consistency checks, Cobaya/CAMB approximation wrappers, chain post-processing, and data tables that connect the mathematical formulation to testable calculations.
         </div>
         <div class="research-tags">
+          <span class="tag">Python</span>
+          <span class="tag">In Progress</span>
+          <span class="tag">CAMB / Cobaya</span>
+        </div>
+      </div>
+      <span class="research-arrow">↗</span>
+    </a>
+
+    <a class="research-item reveal reveal-delay-3" href="https://github.com/AparajeetS/metric-audit-paper-code" target="_blank">
+      <span class="research-num">004</span>
+      <div>
+        <div class="research-title">Marginal Baseline Evaluation (MBE)</div>
+        <div class="research-desc">
+          An in-progress research program for auditing whether proposed generalization metrics retain predictive signal after ordinary training baselines and design variables are controlled. Early experiments provide positive evidence that the method can separate surviving signals from washout, sign inversion, and fragile pooled correlations, with CEI / FIM_norm as the current case study.
+        </div>
+        <div class="research-tags">
+          <span class="tag">MBE</span>
+          <span class="tag">CEI</span>
+          <span class="tag">FIM_norm</span>
           <span class="tag">In Progress</span>
         </div>
       </div>
-      <span class="research-arrow" style="opacity:0.2;">↗</span>
-    </div>
+      <span class="research-arrow">↗</span>
+    </a>
 
     <a class="research-item reveal reveal-delay-3" href="https://substack.com/@aparajeetshadangi" target="_blank">
-      <span class="research-num">004</span>
+      <span class="research-num">005</span>
       <div>
         <div class="research-title">Writings (Substack)</div>
         <div class="research-desc">
@@ -1055,25 +1078,25 @@
     <line x1="20" y1="80" x2="100" y2="80" stroke="#A855F7" stroke-width="0.4" stroke-dasharray="3 4"/>
   </svg>
 
-  <p class="section-label reveal">03 &nbsp; Work in Progress</p>
+  <p class="section-label reveal">03 &nbsp; Projects &amp; Current Work</p>
 
   <!-- Pipeline -->
   <div class="wip-block reveal reveal-delay-1">
     <div class="wip-block-head">
       <span class="wip-block-num">I</span>
-      <span class="wip-block-title">Numerical Pipeline</span>
+      <span class="wip-block-title">CDC Numerical Pipeline</span>
     </div>
     <div class="wip-grid">
       <div class="wip-left">
-        <p>The numerical implementation builds directly from the mathematical system derived in CDC II. Current work focuses on stable background evolution using the dimensionless e-fold system, Runge-Kutta integration of the full ODE system, and preparation for Boltzmann-code integration. The pipeline is being developed toward MCMC-based likelihood analysis against real observational data — the quantitative test that will determine whether CDC is competitive with ΛCDM.</p>
+        <p>The numerical implementation builds directly from the mathematical system derived in CDC II. Current work focuses on stable background evolution, reference solvers, geometric likelihood checks, and the path toward Boltzmann-code integration. The goal is a quantitative, likelihood-based comparison of CDC against ΛCDM across independent observational datasets.</p>
       </div>
       <div class="wip-right">
-        <div class="stack-item"><span class="stack-label">Forward Model</span><span class="stack-value">Background evolution using the e-fold system derived in CDC II</span></div>
-        <div class="stack-item"><span class="stack-label">Numerical Integration</span><span class="stack-value">Runge-Kutta methods applied to the dimensionless system</span></div>
-        <div class="stack-item"><span class="stack-label">Framework Direction</span><span class="stack-value">Preparing integration into CAMB / CLASS</span></div>
-        <div class="stack-item"><span class="stack-label">Sampling</span><span class="stack-value">MCMC planned for full likelihood analysis</span></div>
-        <div class="stack-item"><span class="stack-label">Datasets</span><span class="stack-value">DESI DR2 BAO · Planck · Pantheon+ · Euclid</span></div>
-        <div class="stack-item"><span class="stack-label">Status</span><span class="stack-value">Active · April 2026</span></div>
+        <div class="stack-item"><span class="stack-label">Reference Solver</span><span class="stack-value">CDC background and quasi-static growth checks</span></div>
+        <div class="stack-item"><span class="stack-label">Likelihood Work</span><span class="stack-value">DESI DR2 BAO + compressed Planck geometric reproduction</span></div>
+        <div class="stack-item"><span class="stack-label">Implementation</span><span class="stack-value">Cobaya/CAMB approximation wrappers and post-processing helpers</span></div>
+        <div class="stack-item"><span class="stack-label">Next Backend</span><span class="stack-value">Full Boltzmann implementation for Paper III direction</span></div>
+        <div class="stack-item"><span class="stack-label">Datasets</span><span class="stack-value">DESI DR2 BAO · Planck · Pantheon+ · Euclid direction</span></div>
+        <div class="stack-item"><span class="stack-label">Status</span><span class="stack-value">Active · 2026</span></div>
       </div>
     </div>
   </div>
@@ -1086,7 +1109,7 @@
     </div>
     <div class="wip-grid">
       <div class="wip-left">
-        <p>CDC II develops the original hypothesis into a complete, self-consistent mathematical theory: an effective spacetime action, binding-dependent kinetic suppression, background evolution equations, a dimensionless e-fold formulation, and a perturbation-level structure suitable for Boltzmann integration. The paper has been submitted to Physics of the Dark Universe and is currently under review. Full Boltzmann implementation is the next development step.</p>
+        <p>CDC II develops the original hypothesis into a self-contained mathematical theory: an effective spacetime action, binding-dependent kinetic suppression, background evolution equations, a dimensionless e-fold formulation, and perturbation-level structure suitable for Boltzmann integration. The next development step is to move from reference checks into full observational inference.</p>
       </div>
       <div class="wip-right">
         <div class="math-item"><div class="math-dot"></div><span class="math-text">Core assumptions and physical motivation</span><span class="math-status">Done</span></div>
@@ -1099,10 +1122,47 @@
     </div>
   </div>
 
-  <!-- Open questions -->
+  <!-- Code projects -->
   <div class="wip-block reveal reveal-delay-3">
     <div class="wip-block-head">
       <span class="wip-block-num">III</span>
+      <span class="wip-block-title">Code &amp; Applied Systems</span>
+    </div>
+    <div class="research-list" style="margin-top:0;">
+      <a class="research-item" href="https://github.com/AparajeetS/Traintools" target="_blank">
+        <span class="research-num">P01</span>
+        <div>
+          <div class="research-title">Traintools</div>
+          <div class="research-desc">A PyPI package for live PyTorch training diagnostics: gradient noise scale, plasticity probes, early-stopping analysis, batch inspection, gradient health, example dynamics, AUM/EL2N, and neural-collapse monitoring.</div>
+          <div class="research-tags"><span class="tag">PyPI</span><span class="tag">PyTorch</span><span class="tag">Training Diagnostics</span></div>
+        </div>
+        <span class="research-arrow">↗</span>
+      </a>
+      <a class="research-item" href="https://github.com/AparajeetS/Mineral-World-Model" target="_blank">
+        <span class="research-num">P02</span>
+        <div>
+          <div class="research-title">Mineral World Model</div>
+          <div class="research-desc">A 3D, process-aware scientific ML pipeline for mineral prospectivity over the western United States, combining public USGS/EarthScope data, physics-inspired simulation, amortized inversion, and Bayesian uncertainty.</div>
+          <div class="research-tags"><span class="tag">Scientific ML</span><span class="tag">3D Inversion</span><span class="tag">Geoscience</span></div>
+        </div>
+        <span class="research-arrow">↗</span>
+      </a>
+      <a class="research-item" href="https://github.com/AparajeetS/Icarus" target="_blank">
+        <span class="research-num">P03</span>
+        <div>
+          <div class="research-title">ICARUS</div>
+          <div class="research-desc">A browser-native mock test engine that turns LaTeX or PDF question papers into timed CBT-style exams with shuffled questions, MathJax rendering, auto-grading, detailed analytics, and downloadable reports.</div>
+          <div class="research-tags"><span class="tag">HTML</span><span class="tag">PDF / LaTeX</span><span class="tag">Education Tooling</span></div>
+        </div>
+        <span class="research-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Open questions -->
+  <div class="wip-block reveal reveal-delay-4">
+    <div class="wip-block-head">
+      <span class="wip-block-num">IV</span>
       <span class="wip-block-title">Open Questions</span>
     </div>
     <div class="research-list" style="margin-top:0;">
@@ -1168,17 +1228,72 @@
       <span class="tl-year">April 2026</span>
       <div class="tl-content">
         <div class="tl-title">Mathematical Framework Development</div>
-        <div class="tl-desc">CDC II completes the mathematical formulation of the framework: kinetic suppression model, background evolution equations, dimensionless e-fold system, and perturbation-level structure. Paper submitted to Physics of the Dark Universe.</div>
+        <div class="tl-desc">CDC II completes the mathematical formulation of the framework: kinetic suppression model, background evolution equations, dimensionless e-fold system, and perturbation-level structure.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">May 2026</span>
+      <div class="tl-content">
+        <div class="tl-title">Computational Implementation of CDC</div>
+        <div class="tl-desc">The CDC framework moves into work-in-progress computational implementation, including background and growth solvers, numerical consistency checks, Cobaya/CAMB approximation wrappers, and post-processing utilities that connect the theory to testable calculations.</div>
+        <div class="research-tags" style="margin-top:0.75rem;">
+          <span class="tag">CDC</span><span class="tag">Python</span><span class="tag">In Progress</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">June 2026</span>
+      <div class="tl-content">
+        <div class="tl-title">Mineral World Model</div>
+        <div class="tl-desc">A 3D scientific ML project develops from data-cube construction into process-aware mineral prospectivity, physics-inspired simulation, amortized inversion, and Bayesian uncertainty over real USGS / EarthScope data.</div>
+        <div class="research-tags" style="margin-top:0.75rem;">
+          <span class="tag">Scientific ML</span><span class="tag">3D Inversion</span><span class="tag">Geoscience</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">June 2026</span>
+      <div class="tl-content">
+        <div class="tl-title">ICARUS Mock Test Engine</div>
+        <div class="tl-desc">A browser-native exam tool turns LaTeX and PDF question papers into timed CBT-style tests with MathJax rendering, shuffled attempts, auto-grading, review mode, and downloadable reports.</div>
+        <div class="research-tags" style="margin-top:0.75rem;">
+          <span class="tag">HTML</span><span class="tag">PDF / LaTeX</span><span class="tag">Education Tooling</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">June 2026</span>
+      <div class="tl-content">
+        <div class="tl-title">Traintools</div>
+        <div class="tl-desc">A PyPI package collects live PyTorch training diagnostics: gradient noise scale, plasticity probes, TrainGuard, batch inspection, gradient health checks, example dynamics, and neural-collapse monitoring.</div>
+        <div class="research-tags" style="margin-top:0.75rem;">
+          <span class="tag">PyPI</span><span class="tag">PyTorch</span><span class="tag">Training Diagnostics</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <span class="tl-year">June 2026</span>
+      <div class="tl-content">
+        <div class="tl-title">MBE Research Program</div>
+        <div class="tl-desc">Marginal Baseline Evaluation develops as an in-progress research program for auditing whether proposed generalization metrics retain predictive signal after ordinary training baselines and design variables are controlled. Early positive evidence shows the method can separate surviving signals from washout, sign inversion, and fragile pooled correlations, with CEI / FIM_norm as the current case study.</div>
+        <div class="research-tags" style="margin-top:0.75rem;">
+          <span class="tag">MBE</span><span class="tag">CEI</span><span class="tag">FIM_norm</span><span class="tag">In Progress</span>
+        </div>
       </div>
     </div>
 
     <div class="tl-item tl-item--active">
-      <span class="tl-year">April 2026 – Present</span>
+      <span class="tl-year">2026 – Present</span>
       <div class="tl-content">
-        <div class="tl-title">Numerical Implementation and Observational Testing</div>
-        <div class="tl-desc">Active numerical implementation of the CDC II background system; CAMB / CLASS integration in preparation; MCMC-based parameter estimation planned against DESI DR2 BAO, Planck, Pantheon+, and Euclid. Parallel work on CDC II journal submission and referee response.</div>
+        <div class="tl-title">Cosmology and ML Research</div>
+        <div class="tl-desc">Current work spans CDC numerical implementation, MBE metric-audit experiments, scientific ML research, and focused software projects that support the research program. The shared focus is making research claims testable through code, reproducible checks, and clear validation boundaries.</div>
         <div class="research-tags" style="margin-top:0.75rem;">
-          <span class="tag">CAMB</span><span class="tag">MCMC</span><span class="tag">DESI DR2</span><span class="tag">Pantheon+</span><span class="tag">Planck</span><span class="tag">Euclid</span>
+          <span class="tag">CDC</span><span class="tag">MBE</span><span class="tag">Scientific ML</span><span class="tag">PyTorch</span><span class="tag">CAMB</span>
         </div>
       </div>
     </div>
@@ -1207,9 +1322,9 @@
     </div>
     <div class="approach-text">
       <p>The standard approach in cosmology is to work within accepted frameworks until evidence demands otherwise. That is the right default. But the persistent uncertainties around dark energy — its unknown physical nature, the cosmological constant problem, and the growing statistical tensions in observational data — create genuine scientific room for alternative models, provided they are rigorously developed and falsifiable.</p>
-      <p>CDC is built to that standard. The goal is not to claim it is correct, but to develop it to the point where observational data can answer that question. A framework that cannot make falsifiable predictions is not science, regardless of its internal structure. CDC makes concrete predictions for H(z), the CMB shift parameters, and the matter power spectrum that can be compared directly against observation. That is the test that matters.</p>
-      <p>I try to be precise about what has been established and what has not. Structural consistency is not the same as observational support. Preliminary numerical agreement is not a result. These distinctions matter, and I take them seriously in how I describe the work.</p>
-      <p>I am 18 and work without institutional affiliation. What I have is uninterrupted time to focus on the problem, access to the same published literature as anyone else, and a commitment to doing the work carefully: verifying the mathematics, implementing the numerics correctly, and comparing against real data.</p>
+      <p>CDC is built to that standard. The goal is not to claim it is correct, but to develop it to the point where observational data can answer that question. A framework that cannot make falsifiable predictions is not science, regardless of its internal structure. CDC makes concrete predictions for H(z), CMB distance observables, growth, and the matter power spectrum that can be compared directly against observation.</p>
+      <p>The same philosophy guides my software projects. A training diagnostic should surface a real failure mode while a run is still alive. A scientific ML model should report uncertainty and domain gaps, not only headline scores. A browser tool should preserve the messy details users actually need: timing, visits, options, answer keys, reports.</p>
+      <p>I try to be precise about what has been established and what has not. Structural consistency is not observational support. Synthetic generalization is not field validation. Preliminary numerical agreement is not a result. Those distinctions matter, and I take them seriously in how I describe the work.</p>
     </div>
   </div>
 </section>
@@ -1227,7 +1342,7 @@
   <p class="section-label reveal">06 &nbsp; Contact</p>
   <div class="contact-grid">
     <div class="contact-pull reveal reveal-delay-1">
-      <em>Open to correspondence.</em> Questions about the framework, potential collaboration, or research-related discussion.
+      <em>Open to correspondence.</em> Research discussion, collaboration, code review, or serious questions about any of the projects here.
     </div>
     <div class="contact-links reveal reveal-delay-2">
       <a class="contact-link" href="mailto:aparajeet.shadangi@proton.me">
@@ -1237,7 +1352,12 @@
       </a>
       <a class="contact-link" href="https://github.com/AparajeetS" target="_blank">
         <span class="contact-link-label">GitHub</span>
-        <span class="contact-link-value">Code &amp; Experiments</span>
+        <span class="contact-link-value">Research Code &amp; Tools</span>
+        <span class="contact-link-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://pypi.org/project/traintools/" target="_blank">
+        <span class="contact-link-label">PyPI</span>
+        <span class="contact-link-value">traintools</span>
         <span class="contact-link-arrow">↗</span>
       </a>
       <a class="contact-link" href="https://substack.com/@aparajeetshadangi" target="_blank">
@@ -1245,11 +1365,11 @@
         <span class="contact-link-value">Writings</span>
         <span class="contact-link-arrow">↗</span>
       </a>
-      <a class="contact-link" href="#">
+      <div class="contact-link">
         <span class="contact-link-label">Location</span>
         <span class="contact-link-value">Bhubaneswar, India</span>
         <span class="contact-link-arrow"></span>
-      </a>
+      </div>
     </div>
   </div>
 </section>
